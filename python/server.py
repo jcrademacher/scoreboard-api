@@ -218,12 +218,12 @@ class myHandler(BaseHTTPRequestHandler):
 		if clients.count(self.client_address[0]) == 0:
 			clients.append(self.client_address[0])
 
-		self.path = "./pages" + self.path
+		self.path = "../build" + self.path
 
-		if self.path=="./pages/":
-			self.path="./pages/index.html"
+		if self.path=="../build/":
+			self.path="../build/index.html"
 
-		if self.path == "./pages/favicon.ico":
+		if self.path == "../build/favicon.ico":
 			return
 
 		if self.path.endswith(".html"):
@@ -231,7 +231,7 @@ class myHandler(BaseHTTPRequestHandler):
 		if self.path.endswith(".js"):
 			mimetype = 'application/javascript'
 
-		f = open("." + self.path)
+		f = open(self.path)
 		self.send_response(200)
 		self.send_header('Content-type',mimetype)
 		self.end_headers()
@@ -239,29 +239,9 @@ class myHandler(BaseHTTPRequestHandler):
 		self.wfile.write(f.read())
 		f.close()
 
-	def do_POST(self):
-		if clients.count(self.client_address[0]) == 0:
-			clients.append(self.client_address[0])
-
-		print self.path
-
-		try:
-			if self.path == "/control/score/home-up":
-				homeAddHandler();
-			if self.path == "/control/score/home-down":
-				homeMinusHandler();
-			if self.path == "/control/score/away-up":
-				awayAddHandler();
-			if self.path == "/control/score/away-down":
-				awayMinusHandler();
-		except NameError:
-			print 'function not defined'
-
-		self.send_response(200)
-
 def updateClock():
 	print "clock tick started"
-	
+
 	while True:
 		h = time.localtime()[3]
 		m = time.localtime()[4]
