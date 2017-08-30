@@ -19,6 +19,11 @@ import serial
 import require
 import thread
 
+import tornado.httpserver
+import tornado.websocket
+import tornado.ioloop
+import tornado.web
+
 
 board = require("./board.py")
 
@@ -231,7 +236,7 @@ class myHandler(BaseHTTPRequestHandler):
 		if self.path.endswith(".js"):
 			mimetype = 'application/javascript'
 
-		f = open(self.path)
+		f = open(os.path.realpath(self.path))
 		self.send_response(200)
 		self.send_header('Content-type',mimetype)
 		self.end_headers()
@@ -255,6 +260,28 @@ def updateClock():
 		if b.clockMode == "clock":
 			b.serialWrite('H',chr(h),'M',chr(m),'S',chr(0))
 
+class WSHandler(tornado.websocket.WebSocketHandler):
+	def check_origin(self, origin):
+		return True
+
+	def open(self):
+		print 'New connection was opened'
+
+	def on_message(self, message):
+		print 'Incoming message:', message
+
+	def on_close(self):
+		print 'Connection was closed...'
+
+def runWebsocket():
+	application = tornado.web.Application([
+  		(r'/ws', WSHandler),
+	])
+
+	socket_server = tornado.httpserver.HTTPServer(application)
+  	socket_server.listen(8888)
+  	tornado.ioloop.IOLoop.instance().start()
+
 try:
 	#Create a web server and define the handler to manage the
 	#incoming request
@@ -263,6 +290,7 @@ try:
 	print 'Started httpserver on port ' , 8000
 
 	thread.start_new_thread(updateClock, ())
+	thread.start_new_thread(runWebsocket, ())	
 
 	server.serve_forever()
 
