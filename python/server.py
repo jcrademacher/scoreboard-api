@@ -57,6 +57,18 @@ def displayHandler():
 	b.serialWriteColor(chr(b.redVal),chr(b.greenVal),chr(b.blueVal))
 
 #TIMER SETTING HANDLER FUNCTIONS
+def setTime(num1, num2, num3, num4):
+    print "Time to set: ", num1, num2, num3, num4
+
+    if num3 > 5:
+        num3 = 5
+
+    b.changeTime(num1, 1)
+    b.changeTime(num2, 2)
+    b.changeTime(num3, 3)
+    b.changeTime(num4, 4)
+
+'''
 def timeAddOnesSecHandler():
 	print "Time Add Ones Sec: "
 	if b.clockMode == "timer" and not b.timerRunning:
@@ -119,7 +131,7 @@ def timeMinusTensMinHandler():
 			b.tenMinVal -= 1
 			if(b.tenMinVal == -1):
 				b.tenMinVal = 9
-			b.changeTime(b.tenMinVal, 4)
+			b.changeTime(b.tenMinVal, 4) '''
 
 #BASIC TIMER FUNCTIONS######################################################
 def setTimer0():
@@ -260,6 +272,28 @@ def updateClock():
 		if b.clockMode == "clock":
 			b.serialWrite('H',chr(h),'M',chr(m),'S',chr(0))
 
+def handleMessage(message):
+    if message == "clockMode/true":
+        setClockMode()
+    elif message == "clockMode/false":
+        setTimerMode()
+    elif message == "home/+1":
+        homeAddHandler()
+    elif message == "home/-1":
+        homeMinusHandler()
+    elif message == "away/+1":
+        awayAddHandler()
+    elif message == "away/-1":
+        awayMinusHandler()
+    elif message == "setTimer0":
+        setTimer0()
+    elif message == "timer":
+        startStopTimer()
+    elif message.find("setTime/", 0, len(message)) > 0:
+        time = message[8:]
+
+        setTime(time[0], time[1], time[2], time[3])
+
 class WSHandler(tornado.websocket.WebSocketHandler):
 	def check_origin(self, origin):
 		return True
@@ -269,6 +303,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def on_message(self, message):
 		print 'Incoming message:', message
+        handleMessage(message)
 
 	def on_close(self):
 		print 'Connection was closed...'
@@ -290,7 +325,7 @@ try:
 	print 'Started httpserver on port ' , 8000
 
 	thread.start_new_thread(updateClock, ())
-	thread.start_new_thread(runWebsocket, ())	
+	thread.start_new_thread(runWebsocket, ())
 
 	server.serve_forever()
 
