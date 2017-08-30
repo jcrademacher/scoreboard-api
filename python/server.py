@@ -223,12 +223,12 @@ class myHandler(BaseHTTPRequestHandler):
 		if clients.count(self.client_address[0]) == 0:
 			clients.append(self.client_address[0])
 
-		self.path = "../build" + self.path
+		self.path = "/home/pi/Desktop/scoreboard-api/build" + self.path
 
-		if self.path=="../build/":
-			self.path="../build/index.html"
+		if self.path=="/home/pi/Desktop/scoreboard-api/build/":
+			self.path="/home/pi/Desktop/scoreboard-api/build/index.html"
 
-		if self.path == "../build/favicon.ico":
+		if self.path == "/home/pi/Desktop/scoreboard-api/build/favicon.ico":
 			return
 
 		if self.path.endswith(".html"):
@@ -236,7 +236,7 @@ class myHandler(BaseHTTPRequestHandler):
 		if self.path.endswith(".js"):
 			mimetype = 'application/javascript'
 
-		f = open(os.path.realpath(self.path))
+		f = open(self.path)
 		self.send_response(200)
 		self.send_header('Content-type',mimetype)
 		self.end_headers()
