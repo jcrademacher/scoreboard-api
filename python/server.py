@@ -64,6 +64,11 @@ def setTime(num1, num2, num3, num4):
         if num3 > 5:
             num3 = 5
 
+	b.tenMinVal = num1
+	b.tenSecVal = num2
+	b.oneMinVal = num3
+	b.oneSecVal = num4
+
         b.changeTime(num1, 1)
         b.changeTime(num2, 2)
         b.changeTime(num3, 3)
@@ -274,26 +279,25 @@ def updateClock():
 			b.serialWrite('H',chr(h),'M',chr(m),'S',chr(0))
 
 def handleMessage(message):
-    if message == "clockMode/true":
-        setClockMode()
-    elif message == "clockMode/false":
-        setTimerMode()
-    elif message == "home/+1":
-        homeAddHandler()
-    elif message == "home/-1":
-        homeMinusHandler()
-    elif message == "away/+1":
-        awayAddHandler()
-    elif message == "away/-1":
-        awayMinusHandler()
-    elif message == "setTimer0":
-        setTimer0()
-    elif message == "timer":
-        startStopTimer()
-    elif message.find("setTime/", 0, len(message)) > 0:
-        time = message[8:]
-
-        setTime(time[0], time[1], time[2], time[3])
+	if message == "clockMode/true":
+		setClockMode()
+	elif message == "clockMode/false":
+		setTimerMode()
+	elif message == "home/+1":
+		homeAddHandler()
+	elif message == "home/-1":
+		homeMinusHandler()
+	elif message == "away/+1":
+		awayAddHandler()
+	elif message == "away/-1":
+		awayMinusHandler()
+	elif message == "setTimer0":
+		setTimer0()
+	elif message == "timer":
+		startStopTimer()
+	elif message.find("setTime/", 0, len(message)) > 0:
+		time = message[8:]
+		setTime(int(time[0]), int(time[1]), int(time[2]), int(time[3]))
 
 class WSHandler(tornado.websocket.WebSocketHandler):
 	def check_origin(self, origin):
@@ -304,7 +308,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def on_message(self, message):
 		print 'Incoming message:', message
-        handleMessage(message)
+		handleMessage(message)
 
 	def on_close(self):
 		print 'Connection was closed...'
