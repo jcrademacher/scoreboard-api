@@ -58,15 +58,16 @@ def displayHandler():
 
 #TIMER SETTING HANDLER FUNCTIONS
 def setTime(num1, num2, num3, num4):
-    print "Time to set: ", num1, num2, num3, num4
+    if b.clockMode == "timer" and not b.timerRunning:
+        print "Time to set: ", num1, num2, num3, num4
 
-    if num3 > 5:
-        num3 = 5
+        if num3 > 5:
+            num3 = 5
 
-    b.changeTime(num1, 1)
-    b.changeTime(num2, 2)
-    b.changeTime(num3, 3)
-    b.changeTime(num4, 4)
+        b.changeTime(num1, 1)
+        b.changeTime(num2, 2)
+        b.changeTime(num3, 3)
+        b.changeTime(num4, 4)
 
 '''
 def timeAddOnesSecHandler():
