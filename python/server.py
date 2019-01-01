@@ -69,10 +69,10 @@ def setTime(num1, num2, num3, num4):
 	b.oneMinVal = num3
 	b.oneSecVal = num4
 
-        b.changeTime(num1, 1)
-        b.changeTime(num2, 2)
-        b.changeTime(num3, 3)
-        b.changeTime(num4, 4)
+        b.changeTime(b.tenMinVal, 4)
+        b.changeTime(b.tenSecVal, 3)
+        b.changeTime(b.oneMinVal, 2)
+        b.changeTime(b.oneSecVal, 1)
 
 '''
 def timeAddOnesSecHandler():
@@ -263,7 +263,7 @@ class myHandler(BaseHTTPRequestHandler):
 		f.close()
 
 def updateClock():
-	print "clock tick started"
+	print "started clock tick..."
 
 	while True:
 		h = time.localtime()[3]
@@ -295,8 +295,9 @@ def handleMessage(message):
 		setTimer0()
 	elif message == "timer":
 		startStopTimer()
-	elif message.find("setTime/", 0, len(message)) > 0:
+	elif message.find("setTime/") >= 0:
 		time = message[8:]
+		print time
 		setTime(int(time[0]), int(time[1]), int(time[2]), int(time[3]))
 
 class WSHandler(tornado.websocket.WebSocketHandler):
@@ -314,27 +315,28 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		print 'Connection was closed...'
 
 def runWebsocket():
+        print 'started WebSocket listener...'
 	application = tornado.web.Application([
   		(r'/ws', WSHandler),
 	])
-
+        
 	socket_server = tornado.httpserver.HTTPServer(application)
   	socket_server.listen(8888)
   	tornado.ioloop.IOLoop.instance().start()
+  	
 
 try:
 	#Create a web server and define the handler to manage the
 	#incoming request
 
-	server = HTTPServer(("192.168.86.41", 8000), myHandler)
-	print 'Started httpserver on port ' , 8000
+	server = HTTPServer(("192.168.1.60", 8000), myHandler)
+	print 'started httpserver on port ' , 8000
 
 	thread.start_new_thread(updateClock, ())
 	thread.start_new_thread(runWebsocket, ())
-
 	server.serve_forever()
 
 
 except KeyboardInterrupt:
-	print '^C received, shutting down the web server'
+	print '\nshutting down the web server'
 	server.socket.close()

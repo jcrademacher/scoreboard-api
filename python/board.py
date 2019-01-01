@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import serial
+import time
 
 class Board:
 
@@ -130,20 +131,20 @@ class Board:
 
     def serialWrite(self, val1, val2, val3=chr(0), val4=chr(0), val5=chr(0), val6=chr(0)):
         self.serial.write(val1)
+	time.sleep(0.1)
         self.serial.write(val2)
+	time.sleep(0.1)
         self.serial.write(val3)
+	time.sleep(0.1)
         self.serial.write(val4)
+	time.sleep(0.1)
         self.serial.write(val5)
+	time.sleep(0.1) # these delays are here to not overflow the arduino buffer
         self.serial.write(val6)
         
     #writes 6-value color data to arduino
     def serialWriteColor(self, val1, val2, val3):
-        self.serial.write('R')
-        self.serial.write(val1)
-        self.serial.write('G')
-        self.serial.write(val2)
-        self.serial.write('B')
-        self.serial.write(val3)
+        self.serialWrite('R',val1,'G',val2,'B',val3)
     
     def show0(self, team, place):
         if(team == 0):
