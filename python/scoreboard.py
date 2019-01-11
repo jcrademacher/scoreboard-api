@@ -270,10 +270,8 @@ while True:
 	h -= 12
 
     x += 1
-    if x == 0 or x % 5 == 0 and b.clockMode == "clock":
+    if b.clockMode == "clock":
         b.serialWrite('H',chr(h),'M',chr(m),'S',chr(0))
-        prevH = h
-        prevM = m
 
 server.close()
 #This will kill the server when the program ends
