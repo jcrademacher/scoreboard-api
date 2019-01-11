@@ -267,97 +267,6 @@ void doTimerTick() {
   displayNums();
 }
 
-void showGo() {
-/*
-  for(int x = 0; x < 235; x++) {
-   
-    for(int i = 0; i < 35; i++) {
-      if(i < 15 || (i >= 20 && i < 30) || i >= 33)
-        num2.setPixelColor(i,num2.Color(x,x,0));
-
-      if(i < 30)
-        num3.setPixelColor(i,num3.Color(x,x,0));
-
-    }
-
-    num2.show();
-    num3.show();
-  }
-  
-  delay(5);
-
-  for(int x = 235; x > 0; x--) {
-
-    for(int i = 0; i < 35; i++) {
-      if(i < 15 || (i >= 20 && i < 30) || i >= 33)
-        num2.setPixelColor(i,num2.Color(x,x,0));
-
-      if(i < 30)
-        num3.setPixelColor(i,num3.Color(x,x,0));
-
-    }
-
-    num2.show();
-    num3.show();
-  }
-  */
-}
-
-
-void showBlue() {
-/*
-  for(int x = 0; x < 235; x++) {
-    for(int i = 0; i < 35; i++) {
-      if(i < 10 || (i >= 25 && i < 30)) {
-        num1.setPixelColor(i,num1.Color(0,0,x));
-        num2.setPixelColor(i,num2.Color(0,0,x));
-        num3.setPixelColor(i,num3.Color(0,0,x));
-        num4.setPixelColor(i,num4.Color(0,0,x));
-      }
-
-      if(i >= 15 && i < 25)
-        num3.setPixelColor(i,num3.Color(0,0,x));
-
-      if(i >= 30 || (i >= 10 && i < 15))
-        num4.setPixelColor(i,num4.Color(0,0,x));
-
-      if(i >= 10 && i < 19 || i >= 21 && i < 25 || i >= 30 && i < 34)
-        num1.setPixelColor(i,num1.Color(0,0,x));
-    }
-
-    num1.show();
-    num2.show();
-    num3.show();
-    num4.show();
-  }
-
-  for(int x = 235; x > 0; x--) {\
-    for(int i = 0; i < 35; i++) {
-      if(i < 10 || (i >= 25 && i < 30)) {
-        num1.setPixelColor(i,num1.Color(0,0,x));
-        num2.setPixelColor(i,num2.Color(0,0,x));
-        num3.setPixelColor(i,num3.Color(0,0,x));
-        num4.setPixelColor(i,num4.Color(0,0,x));
-      }
-
-      if(i >= 15 && i < 25)
-        num3.setPixelColor(i,num3.Color(0,0,x));
-
-      if(i >= 30 || (i >= 10 && i < 15))
-        num4.setPixelColor(i,num4.Color(0,0,x));
-
-      if(i >= 10 && i < 19 || i >= 21 && i < 25 || i >= 30 && i < 34)
-        num1.setPixelColor(i,num1.Color(0,0,x));
-    }
-
-    num1.show();
-    num2.show();
-    num3.show();
-    num4.show();
-  }
-  */
-}
-
 void initLEDS() {
   fill_solid(num1, NUM_LEDS, CRGB(0,0,0));
   fill_solid(num2, NUM_LEDS, CRGB(0,0,0));
@@ -466,8 +375,6 @@ void loop() {
 
     handleData(data);
     doTimerTick();
-
+    FastLED.show();
   }
-
-  FastLED.show();
 }
