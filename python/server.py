@@ -329,7 +329,7 @@ try:
 	#Create a web server and define the handler to manage the
 	#incoming request
 
-	server = HTTPServer(("192.168.1.60", 8000), myHandler)
+	server = HTTPServer(("192.168.86.41", 8000), myHandler)
 	print 'started httpserver on port ' , 8000
 
 	thread.start_new_thread(updateClock, ())

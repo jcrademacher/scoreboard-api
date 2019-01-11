@@ -261,7 +261,20 @@ void doTimerTick() {
     showNum(num3, NUM_LEDS, tenSecVal);
     showNum(num4, NUM_LEDS, oneSecVal);
 
+    FastLED.show();
+
+    red = 0;
+    blue = MAX_COLOR_VAL;
+    green = MAX_COLOR_VAL;
+    
     return;
+  }
+
+  if(oneSecVal % 2) {
+    fill_solid(pins, 2, CRGB(0,0,0));
+  }
+  else {
+    fill_solid(pins, 2, CRGB(MAX_COLOR_VAL,MAX_COLOR_VAL,MAX_COLOR_VAL));
   }
 
   displayNums();
@@ -296,53 +309,6 @@ void initLEDS() {
     delay(10);
     FastLED.show();
   }
-
-
-  /*
-  for(int i = 30; i < 35; i++) {
-    num1.setPixelColor(i,num1.Color(235,235,235));
-    num2.setPixelColor(i,num2.Color(235,235,235));
-    num3.setPixelColor(i,num3.Color(235,235,235));
-    num4.setPixelColor(i,num4.Color(235,235,235));
-
-    num1.show();
-    num2.show();
-    num3.show();
-    num4.show();
-
-    delay(100);
-  }
-
-  fill_solid(num1);
-  fill_solid(num2);
-  fill_solid(num3);
-  fill_solid(num4);
-  fill_solid(pins);
-
-  // shows "J"
-  for(int i = 15; i < 30; i++)
-    num1.setPixelColor(i,num1.Color(0,0,235));
-
-  // shows "R"
-  for(int i = 0; i < 35; i++) {
-    if(i >= 25 && i < 30 || i == 34 || i == 19 || i == 20)
-      continue;
-    num2.setPixelColor(i,num1.Color(0,0,235));
-  }
-
-  // shows "A"
-  for(int i = 0; i < 35; i++) {
-    if(i >= 25 && i < 30)
-      continue;
-    num3.setPixelColor(i,num1.Color(0,0,235));
-  }
-
-  // shows "D"
-  for(int i = 0; i < 30; i++) {
-    if(i == 14 || i == 15 || i == 24 || i == 25)
-      continue;
-    num4.setPixelColor(i,num1.Color(0,0,235));
-  }*/
 
   FastLED.show();
 }
