@@ -131,10 +131,15 @@ class Board:
 
     def serialWrite(self, val1, val2, val3=chr(0), val4=chr(0), val5=chr(0), val6=chr(0)):
         self.serial.write(val1)
+        time.sleep(0.01)
         self.serial.write(val2)
+        time.sleep(0.01)
         self.serial.write(val3)
+        time.sleep(0.01)
         self.serial.write(val4)
+        time.sleep(0.01)
         self.serial.write(val5)
+        time.sleep(0.01)
         self.serial.write(val6)
 
     #writes 6-value color data to arduino
