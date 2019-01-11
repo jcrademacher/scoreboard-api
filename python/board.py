@@ -38,9 +38,9 @@ class Board:
 
         self.clockMode = "clock"
         self.timerRunning = False
-        
+
         self.serial = serial.Serial('/dev/ttyACM0', 115200)
-        
+
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
 
@@ -103,7 +103,7 @@ class Board:
         GPIO.output(self.AWAY_MIDDLE,GPIO.HIGH)
         GPIO.output(self.AWAY_ONE,GPIO.HIGH)
 
-    def changeHome(self, state, direction): 
+    def changeHome(self, state, direction):
         if state == 1 and direction == "add":
             self.homeScore += 1
         if state == 1 and direction == "minus":
@@ -116,7 +116,7 @@ class Board:
 
         self.showNum(self.homeScore, 0)
 
-    def changeAway(self, state, direction): 
+    def changeAway(self, state, direction):
         if state == 1 and direction == "add":
                 self.awayScore += 1
         if state == 1 and direction == "minus":
@@ -131,21 +131,16 @@ class Board:
 
     def serialWrite(self, val1, val2, val3=chr(0), val4=chr(0), val5=chr(0), val6=chr(0)):
         self.serial.write(val1)
-	time.sleep(0.1)
         self.serial.write(val2)
-	time.sleep(0.1)
         self.serial.write(val3)
-	time.sleep(0.1)
         self.serial.write(val4)
-	time.sleep(0.1)
         self.serial.write(val5)
-	time.sleep(0.1) # these delays are here to not overflow the arduino buffer
         self.serial.write(val6)
-        
+
     #writes 6-value color data to arduino
     def serialWriteColor(self, val1, val2, val3):
         self.serialWrite('R',val1,'G',val2,'B',val3)
-    
+
     def show0(self, team, place):
         if(team == 0):
             self.homeOff()
@@ -289,7 +284,7 @@ class Board:
             GPIO.output(self.AWAY_BOTTOM_LEFT,GPIO.HIGH)
             if place == 1:
                 GPIO.output(self.AWAY_ONE,GPIO.HIGH)
-            
+
     def show7(self,team,place):
         if(team == 0):
             self.homeOff()
@@ -298,7 +293,7 @@ class Board:
             GPIO.output(self.HOME_TOP,GPIO.HIGH)
             if place == 1:
                 GPIO.output(self.HOME_ONE,GPIO.HIGH)
-            
+
         elif(team == 1):
             self.awayOff()
             GPIO.output(self.AWAY_BOTTOM_RIGHT,GPIO.HIGH)
