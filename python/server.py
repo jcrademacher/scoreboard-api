@@ -272,7 +272,7 @@ def updateClock():
 		if h > 12:
 			h -= 12
 
-		time.sleep(10) # thread updates every 10 seconds
+		time.sleep(1) # thread updates every second
 		print "tick"
 
 		if b.clockMode == "clock":
@@ -319,11 +319,11 @@ def runWebsocket():
 	application = tornado.web.Application([
   		(r'/ws', WSHandler),
 	])
-        
+
 	socket_server = tornado.httpserver.HTTPServer(application)
   	socket_server.listen(8888)
   	tornado.ioloop.IOLoop.instance().start()
-  	
+
 
 try:
 	#Create a web server and define the handler to manage the
