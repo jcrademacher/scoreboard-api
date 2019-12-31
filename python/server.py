@@ -274,7 +274,6 @@ def updateClock():
 			h -= 12
 
 		time.sleep(1) # thread updates every second
-		print "tick"
 
 		if b.clockMode == "clock":
 			b.serialWrite('H',chr(h),'M',chr(m),'S',chr(0))
