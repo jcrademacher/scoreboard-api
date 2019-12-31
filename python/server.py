@@ -24,6 +24,7 @@ import tornado.websocket
 import tornado.ioloop
 import tornado.web
 
+import commands
 
 board = require("./board.py")
 
@@ -329,7 +330,7 @@ try:
 	#Create a web server and define the handler to manage the
 	#incoming request
 
-	server = HTTPServer(("192.168.1.46", 8000), myHandler)
+	server = HTTPServer((commands.getoutput("hostname -I"), 8000), myHandler)
 	print 'started httpserver on port ' , 8000
 
 	thread.start_new_thread(updateClock, ())
