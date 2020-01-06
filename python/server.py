@@ -298,7 +298,9 @@ def handleMessage(message):
 	elif message.find("setTime/") >= 0:
 		time = message[8:]
 		print time
-		setTime(int(time[0]), int(time[1]), int(time[2]), int(time[3]))
+		hours = int(time[0:2])
+		minutes = int(time[2:])
+		b.serialWrite('H',chr(hours),'M',chr(minutes),'S',chr(0))
 
 class WSHandler(tornado.websocket.WebSocketHandler):
 	def check_origin(self, origin):
