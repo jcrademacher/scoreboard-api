@@ -333,7 +333,7 @@ try:
 
 	server = HTTPServer((commands.getoutput("hostname -I"), 8000), myHandler)
 	print 'started httpserver on port ' , 8000
-
+	fancyFlash()
 	thread.start_new_thread(updateClock, ())
 	thread.start_new_thread(runWebsocket, ())
 	server.serve_forever()
