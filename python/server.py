@@ -173,9 +173,9 @@ def setTimerMode():
 	b.serialWrite('C',chr(1));
 
 def setColors(colors):
-	r = colors[0]
-	g = colors[1]
-	b = colors[2]
+	red = colors[0]
+	green = colors[1]
+	blue = colors[2]
 
 	b.serialWriteColor(r,g,b)
 
@@ -342,7 +342,6 @@ try:
 
 	server = HTTPServer((commands.getoutput("hostname -I"), 8000), myHandler)
 	print 'started httpserver on port ' , 8000
-	fancyFlash()
 	thread.start_new_thread(updateClock, ())
 	thread.start_new_thread(runWebsocket, ())
 	server.serve_forever()
