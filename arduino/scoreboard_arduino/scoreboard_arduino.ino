@@ -128,9 +128,9 @@ void handleData(int data[]) {
     return;
 
   if(data[0] == 'R' && data[2] == 'G' && data[4] == 'B') {
-    red = data[1];
-    green = data[3];
-    blue = data[5];
+    red = data[1] / 100 * MAX_COLOR_VAL;
+    green = data[3] / 100 * MAX_COLOR_VAL;
+    blue = data[5] / 100 * MAX_COLOR_VAL;
 
     displayNums();
   }
