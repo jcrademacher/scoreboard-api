@@ -177,7 +177,7 @@ def setColors(colors):
 	green = colors[1]
 	blue = colors[2]
 
-	b.serialWriteColor(r,g,b)
+	b.serialWriteColor(red,green,blue)
 
 #FADERS
 #################################################################################
