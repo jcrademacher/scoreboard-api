@@ -172,6 +172,12 @@ def setTimerMode():
 	b.clockMode = "timer"
 	b.serialWrite('C',chr(1));
 
+def setColors(colors):
+	r = colors[0]
+	g = colors[1]
+	b = colors[2]
+
+	b.serialWriteColor(r,g,b)
 
 #FADERS
 #################################################################################
@@ -301,6 +307,9 @@ def handleMessage(message):
 		hours = int(time[0:2])
 		minutes = int(time[2:])
 		b.serialWrite('H',chr(hours),'M',chr(minutes),'S',chr(0))
+	elif message.find("setColor/") >= 0:
+		print message
+		setColors(message[9:])
 
 class WSHandler(tornado.websocket.WebSocketHandler):
 	def check_origin(self, origin):
